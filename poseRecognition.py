@@ -4,6 +4,7 @@ import time
 from pynput.keyboard import Key, Controller
 import serial
 
+
 arduino = serial.Serial(port='COM6', baudrate=9600, timeout=.2)
 
 mpDraw = mp.solutions.drawing_utils
@@ -11,11 +12,12 @@ mpPose = mp.solutions.pose
 pose = mpPose.Pose()
 
 frameWidth = 640
-frameHeight = 480           
+frameHeight = 480                              
 cap = cv2.VideoCapture(0)
 cap.set(3, frameWidth)
 cap.set(4, frameHeight)
 cap.set(10,150)
+
 
 pTime = 0
 
@@ -23,7 +25,7 @@ bounceTime = 3
 countToBounce = 0
 
 import requests
-from                                               requests.structures import CaseInsensitiveDict
+from requests.structures import CaseInsensitiveDict
 
 headers = CaseInsensitiveDict()
 
@@ -33,9 +35,10 @@ changeNeed = False
 keyboard = Controller()
 
 def release():
-    keyboard.release(Key.left)
-    keyboard.release(Key.right)
-    keyboard.release(Key.space)
+    print("release")
+    #keyboard.release(Key.left)
+    #keyboard.release(Key.right)
+    #keyboard.release(Key.space)
 
 def pressLeft():
     #keyboard.press('b')
@@ -69,6 +72,7 @@ while True:
 
         if results.pose_landmarks.landmark[0].visibility > 0.8:
             if results.pose_landmarks.landmark[0].y < 0.3:
+                print("middle")
                 keyboard.press(Key.space)
             elif results.pose_landmarks.landmark[0].x > 0.7:
                 pressLeft()
