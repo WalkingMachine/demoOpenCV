@@ -2,6 +2,9 @@ import cv2
 import mediapipe as mp
 import time
 from pynput.keyboard import Key, Controller
+import serial
+
+arduino = serial.Serial(port='COM6', baudrate=9600, timeout=.2)
 
 mpDraw = mp.solutions.drawing_utils
 mpPose = mp.solutions.pose
@@ -35,10 +38,15 @@ def release():
     keyboard.release(Key.space)
 
 def pressLeft():
-    keyboard.press(Key.left)
+    #keyboard.press('b')
+    #keyboard.press(Key.enter)
+    arduino.write(bytes('a', 'utf-8'))
 
 def pressRight():
-    keyboard.press(Key.right)
+    #keyboard.press('a')
+    #keyboard.press(Key.enter)
+    arduino.write(bytes('b', 'utf-8'))
+
 
 while True:
     success, img = cap.read()
